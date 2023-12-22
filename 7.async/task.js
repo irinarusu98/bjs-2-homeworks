@@ -28,7 +28,8 @@ class AlarmClock {
     }
 
     getCurrentFormattedTime() {      //возвращает текущее время в строковом формате HH:MM
-
+        let currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        return currentTime;
     }
 
     start() {    //запускает будильник
@@ -38,6 +39,8 @@ class AlarmClock {
 
         //Создавайте новый интервал
         this.intervalId = setInterval(() => {
+            let currentTime = this.getCurrentFormattedTime();
+
             this.alarmCollection.forEach(alarm => {
                 if (alarm.time === currentTime && alarm.canCall) {
                     alarm.canCall = false;
@@ -62,6 +65,6 @@ class AlarmClock {
     // удаляет все звонки
     clearAlarms() {
         this.stop();           // Остановка интервала
-        this.alarmCollection = [];    // Очистка коллекции звонков
+        this.alarmCollection.length = 0;    // Очистка коллекции звонков
     }
 }
